@@ -1,4 +1,12 @@
+module SightSeeing
+
 using Random
+
+export @demonstrate
+export @explain
+export @write_code
+export @ask_continue
+
 
 function print_animate(message::String)
     for c in message
@@ -12,7 +20,12 @@ end
 macro demonstrate(expr::String)
     print_animate("julia> " * expr)
     sleep(1)
-    eval(Meta.parse(expr))
+    out = eval(Meta.parse(expr))
+    if out != nothing
+        print(out, "\n")
+    else
+        print("\n")
+    end
 end
 
 macro explain(message::String)
@@ -38,9 +51,6 @@ macro ask_continue()
     return nothing
 end
 
-function tutorial(path::String)
-    include(path)
-end
 
 
-
+end  # module

@@ -1,2 +1,13 @@
+name = "SightSeeing"
+uuid = "4bf90328-d0c4-5715-aebf-b1578e752d55"
+version = "0.0.1"
+
 [deps]
+Agents = "46ada45e-f475-11e8-01d0-f70cc89e6671"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
