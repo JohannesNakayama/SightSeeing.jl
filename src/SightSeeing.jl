@@ -11,6 +11,7 @@ export @explain
 export @code_snippet
 export @ask_continue
 export @end_paragraph
+export @new_slide
 
 
 """
@@ -23,7 +24,6 @@ function print_animate(message::String)
         print(c)
         sleep(Random.rand() * 0.05)
     end
-    print("\n")
     return nothing
 end
 
@@ -35,6 +35,7 @@ Simply print an verbal explanation.
 """
 macro explain(message::String)
     print_animate(message)
+    print("\n")
     return nothing
 end
 
@@ -48,6 +49,7 @@ macro explain(args::String...)
     for a in args
         print_animate(a)
     end
+    print("\n")
     return nothing
 end
 
@@ -59,6 +61,7 @@ Demonstrate how a certain piece of code works.
 """
 macro code_repl(expr::String)
     print_animate("julia> " * expr)
+    print("\n")
     sleep(1)
     out = eval(Meta.parse(expr))
     if out != nothing
@@ -66,6 +69,7 @@ macro code_repl(expr::String)
     else
         print("\n")
     end
+    print("\n")
     return nothing
 end
 
@@ -76,10 +80,11 @@ end
 If you want to include larger chunks of code, use this function.
 """
 macro code_snippet(snippet::String)
-    print("\n")
     print_animate(snippet)
     print("\n")
-    eval(Meta.parse(snippet))
+    sleep(1)
+    out = eval(Meta.parse(snippet))
+    print(out, "\n")
     return nothing
 end
 
@@ -90,7 +95,7 @@ end
 Prompt user to press any key to continue.
 """
 macro ask_continue()
-    print_animate("Press any key to continue.")
+    print_animate("Press any key to continue.\n")
     tmp = readline();
     return nothing
 end
@@ -102,8 +107,13 @@ end
 Print a divider to mark the end of a chapter or paragraph.
 """
 macro end_paragraph()
-    print("\n\n-----------------\n\n")
+    print("______________________________________________\n\n")
     return nothing
+end
+
+
+macro new_slide()
+    Base.run(`clear`)
 end
 
 
