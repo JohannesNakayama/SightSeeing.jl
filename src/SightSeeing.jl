@@ -10,6 +10,7 @@ export @code_repl
 export @explain
 export @code_snippet
 export @ask_continue
+export @end_paragraph
 
 
 """
@@ -91,6 +92,17 @@ Prompt user to press any key to continue.
 macro ask_continue()
     print_animate("Press any key to continue.")
     tmp = readline();
+    return nothing
+end
+
+
+"""
+    @ end_paragraph()
+
+Print a divider to mark the end of a chapter or paragraph.
+"""
+macro end_paragraph()
+    print("\n\n-----------------\n\n")
     return nothing
 end
 
