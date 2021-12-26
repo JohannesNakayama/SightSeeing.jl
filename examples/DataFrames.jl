@@ -4,6 +4,8 @@ using Main.SightSeeing
 
 @explain "The DataFrames package provides convenient types and functionalities to work with tabular data."
 
+@end_paragraph
+
 @code_repl "using DataFrames"
 @code_repl "df = DataFrame()"
 

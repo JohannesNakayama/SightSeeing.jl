@@ -1,6 +1,12 @@
 using Agents
+include("../src/SightSeeing.jl")
+using Main.SightSeeing
+
+@explain ""
 
 @explain "First, you need to define an agent type."
+
+@code_repl "using Agents"
 
 @code_snippet """
     mutable struct ExampleAgent <: AbstractAgent
