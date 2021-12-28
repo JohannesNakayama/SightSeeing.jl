@@ -19,10 +19,10 @@ export @new_slide
 
 Print out a message with some randomness to simulate keystrokes.
 """
-function print_animate(message::String)
+function print_typewriter(message::String)
     for c in message
         print(c)
-        sleep(Random.rand() * 0.05)
+        sleep(Random.rand() * 0.05)  # TODO: expose `speed` argument to user interface
     end
     return nothing
 end
@@ -34,7 +34,7 @@ end
 Simply print an verbal explanation.
 """
 macro explain(message::String)
-    print_animate(message)
+    print_typewriter(message)
     print("\n")
     return nothing
 end
@@ -47,7 +47,7 @@ Print several lines of explanation.
 """
 macro explain(args::String...)
     for a in args
-        print_animate(a)
+        print_typewriter(a)
     end
     print("\n")
     return nothing
@@ -60,7 +60,7 @@ end
 Demonstrate how a certain piece of code works.
 """
 macro code_repl(expr::String)
-    print_animate("julia> " * expr)
+    print_typewriter("julia> " * expr)
     print("\n")
     sleep(1)
     out = eval(Meta.parse(expr))
@@ -80,7 +80,7 @@ end
 If you want to include larger chunks of code, use this function.
 """
 macro code_snippet(snippet::String)
-    print_animate(snippet)
+    print_typewriter(snippet)
     print("\n")
     sleep(1)
     out = eval(Meta.parse(snippet))
@@ -95,7 +95,7 @@ end
 Prompt user to press any key to continue.
 """
 macro ask_continue()
-    print_animate("Press any key to continue.\n")
+    print_typewriter("Press any key to continue.\n")
     tmp = readline();
     return nothing
 end
@@ -107,14 +107,14 @@ end
 Print a divider to mark the end of a chapter or paragraph.
 """
 macro end_paragraph()
-    print("______________________________________________\n\n")
+    print("\n\n")
     return nothing
 end
 
 
 macro new_slide()
     Base.run(`clear`)
-end
+end  # probably doesn't run on Windows
 
 
 end  # module
