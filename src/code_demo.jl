@@ -4,22 +4,16 @@
 Demonstrate how a certain piece of code works.
 """
 macro code_repl(expr::String)
-    out = eval(Meta.parse(expr))
-    if out != nothing
-        out_add = "\n"
-    else
-        out = ""
-        out_add = ""
-    end
+    out = @eval Meta.parse($expr)
     return :(
         print_typewriter("julia> " * $expr);
         print("\n");
         sleep(1);
-        print($out);
-        print($out_add);
+        print(eval($out));
         print("\n");
     )
 end
+
 
 """
     @code_repl(expr::Expr)
@@ -27,7 +21,8 @@ end
 Demonstrate how a certain piece of code works.
 """
 macro code_repl(expr::Expr)
-    out = eval(expr)
+    expr_as_string = repr(expr)
+    out = @eval expr;
     if out != nothing
         out_add = "\n"
     else
@@ -35,7 +30,7 @@ macro code_repl(expr::Expr)
         out_add = ""
     end
     return :(
-        print_typewriter("julia> " * $expr);
+        print_typewriter("julia> " * $expr_as_string);
         print("\n");
         sleep(1);
         print($out);

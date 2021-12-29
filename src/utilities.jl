@@ -11,5 +11,4 @@ function print_typewriter(message::Union{String, Expr})
         print(c)
         sleep(Random.rand() * 0.05)  # TODO: expose `speed` argument to user interface
     end
-    return nothing
 end
