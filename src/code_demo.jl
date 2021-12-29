@@ -9,7 +9,7 @@ macro code_repl(expr::String)
         print_typewriter("julia> " * $expr);
         print("\n");
         sleep(1);
-        print(eval($out));
+        $out;
         print("\n");
     )
 end
@@ -21,20 +21,22 @@ end
 Demonstrate how a certain piece of code works.
 """
 macro code_repl(expr::Expr)
-    expr_as_string = repr(expr)
-    out = @eval expr;
-    if out != nothing
-        out_add = "\n"
-    else
-        out = ""
-        out_add = ""
-    end
+    # expr_as_string = repr(expr)
+    out = @eval $expr
+    # if out != nothing
+    #     out_add = "\n"
+    # else
+    #     out = ""
+    #     out_add = ""
+    # end
+    repl_input_string = replace(string(expr), r"/" => "")
     return :(
-        print_typewriter("julia> " * $expr_as_string);
+        print("julia> ");
+        print_typewriter($repl_input_string);
         print("\n");
         sleep(1);
-        print($out);
-        print($out_add);
+        $out;
+        # print($out_add);
         print("\n");
     )
 end
