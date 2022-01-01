@@ -7,39 +7,13 @@ macro code_repl(expr::String)
     out = @eval Meta.parse($expr)
     return :(
         print_typewriter("julia> " * $expr);
-        print("\n");
+        println();
         sleep(1);
-        $out;
-        print("\n");
+        show($out);
+        println("\n");
     )
 end
 
-
-"""
-    @code_repl(expr::Expr)
-
-Demonstrate how a certain piece of code works.
-"""
-macro code_repl(expr::Expr)
-    # expr_as_string = repr(expr)
-    out = @eval $expr
-    # if out != nothing
-    #     out_add = "\n"
-    # else
-    #     out = ""
-    #     out_add = ""
-    # end
-    repl_input_string = replace(string(expr), r"/" => "")
-    return :(
-        print("julia> ");
-        print_typewriter($repl_input_string);
-        print("\n");
-        sleep(1);
-        $out;
-        # print($out_add);
-        print("\n");
-    )
-end
 
 """
     @code_snippet(snippet::String)
@@ -47,27 +21,15 @@ end
 If you want to include larger chunks of code, use this function.
 """
 macro code_snippet(snippet::String)
-    out = eval(Meta.parse(snippet))
+    out = @eval Meta.parse($snippet)
     return :(
         print_typewriter($snippet);
-        print("\n");
+        println();
         sleep(1);
-        print($out, "\n");
+        show($out);
+        println("\n");
     )
 end
 
 
-"""
-    @code_snippet(snippet::Expr)
-
-If you want to include larger chunks of code, use this function.
-"""
-macro code_snippet(snippet::Expr)
-    out = eval(snippet)
-    return :(
-        print_typewriter($snippet);
-        print("\n");
-        sleep(1);
-        print($out, "\n");
-    )
-end
+# TODO: dispatch for Expr objects

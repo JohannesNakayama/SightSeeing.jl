@@ -4,13 +4,7 @@ using Main.SightSeeing
 begin
     @new_slide
     @explain "This is a generic explanation text."
-    @code_snippet :(
-        # This is some example code for a code snippet
-        b = 24;
-        function greet(x)
-            print(x)
-        end;
-    )
+    @code_snippet "b = 24\nfunction greet(x)\n\tprint(x)\nend"
     @ask_continue
 end
 

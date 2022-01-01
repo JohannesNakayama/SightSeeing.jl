@@ -6,7 +6,7 @@ Simply print an verbal explanation.
 macro explain(message::String)
     return :(
         print_typewriter($message);
-        print("\n\n");
+        println("\n");
     )
 end
 
@@ -18,10 +18,11 @@ Print several lines of explanation.
 """
 macro explain(args::String...)
     return :(
-        for a in args
+        for a in $args
             print_typewriter(a)
+            println()
         end;
-        print("\n\n")
+        println("\n")
     )
 end
 
@@ -31,7 +32,8 @@ macro item_list(arr::String...)
         for item in $arr
             print("  • ")
             print_typewriter(item)
-            print("\n")
+            println()
         end;
+        println();
     )
 end
