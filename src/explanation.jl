@@ -1,39 +1,31 @@
 """
-    @explain(message::String)
-
-Simply print an verbal explanation.
-"""
-macro explain(message::String)
-    return :(
-        print_typewriter($message);
-        println("\n");
-    )
-end
-
-
-"""
-    @explain(args::String...)
+    @explain args...
 
 Print several lines of explanation.
 """
-macro explain(args::String...)
-    return :(
+macro explain(args...)
+    return quote
         for a in $args
-            print_typewriter(a)
+            @typewriter a
             println()
-        end;
-        println("\n")
-    )
+        end
+        println()
+    end
 end
 
 
-macro item_list(arr::String...)
-    return :(
-        for item in $arr
+"""
+    @item_list args...
+
+Create a list of items for an explanation.
+"""
+macro item_list(items...)
+    return quote
+        for item in $items
             print("  • ")
-            print_typewriter(item)
+            @typewriter item
             println()
-        end;
-        println();
-    )
+        end
+        println()
+    end
 end

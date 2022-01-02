@@ -1,14 +1,16 @@
 """
-    print_animate(message::String)
+    @typewriter message
 
-Print out a message with some randomness to simulate keystrokes.
+Print a message like it's typed.
 """
-function print_typewriter(message::Union{String, Expr})
+macro typewriter(message)
     if typeof(message) == Expr
         message = string(message)
     end
-    for c in message
-        print(c)
-        sleep(Random.rand() * 0.05)  # TODO: expose `speed` argument to user interface
+    return quote
+        for c in $message
+            print(c)
+            sleep(Random.rand() * 0.05)
+        end
     end
 end
